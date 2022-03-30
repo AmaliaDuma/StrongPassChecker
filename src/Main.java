@@ -5,5 +5,6 @@ public class Main {
         System.out.println(sol.solution("aaahysdsuunbbbbbbbbbbsudbbb"));
         System.out.println(sol.solution("555bbb"));
         System.out.println(sol.solution("aaaaaa"));
+        System.out.println(sol.solution("abc5Dcds"));
     }
 }

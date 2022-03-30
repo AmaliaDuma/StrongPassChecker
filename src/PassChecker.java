@@ -2,7 +2,7 @@ import java.util.regex.Pattern;
 
 public class PassChecker {
 
-    public int solution(String password){
+    public int solution(String s){
         Pattern lowerCase = Pattern.compile("[a-z]+");
         Pattern upperCase = Pattern.compile("[A-Z]+");
         Pattern digits = Pattern.compile("[0-9]+");
@@ -10,14 +10,14 @@ public class PassChecker {
         //    We compute how many missing characters we have by checking if there is a match
         // in the string with out regex.
         int missingCh = 0;
-        if (!lowerCase.matcher(password).find())
+        if (!lowerCase.matcher(s).find())
             missingCh += 1;
-        if (!upperCase.matcher(password).find())
+        if (!upperCase.matcher(s).find())
             missingCh += 1;
-        if (!digits.matcher(password).find())
+        if (!digits.matcher(s).find())
             missingCh += 1;
 
-        if (password.length() < 6)
+        if (s.length() < 6)
             /*  We know that if the length is < 6 the "repeating characters" problem will be solved by fixing
              either the length or the missing characters.
                 We want to fix as many problems as possible, so we try to overlap the operations. Let's take an example.
@@ -26,7 +26,7 @@ public class PassChecker {
              •If we need to insert more than 2 => we take the first 2 inserted to be our missing characters, then the rest
             can be anything.
             */
-            return Math.max(missingCh, 6-password.length());
+            return Math.max(missingCh, 6-s.length());
         else{
             /* Now we take the case there len >= 6.
                If 6 <= len <= 20 it's easy. We count how many repetitions we have that will give us the number of
@@ -37,8 +37,8 @@ public class PassChecker {
                We keep in toDelete how many characters we need to delete, and we add them to changes since the
              actions of deleting them is required anyway.
              */
-            int len = password.length();
-            int toDelete = Math.max(0, password.length()-20);
+            int len = s.length();
+            int toDelete = Math.max(0, s.length()-20);
             int changes = toDelete;
             int toReplace = 0;
             int[] repetitions = new int[len];
@@ -49,7 +49,7 @@ public class PassChecker {
              */
             for (int i=0; i<len;){
                 int j = i;
-                while (i<len && password.charAt(i) == password.charAt(j))
+                while (i<len && s.charAt(i) == s.charAt(j))
                     i++;
                 repetitions[j] = i-j;
             }
